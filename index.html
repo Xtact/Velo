@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>VELO™ Prototype</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VELO™ - Turn Dead Inventory into Live Revenue</title>
     <style>
         * {
             margin: 0;
@@ -12,555 +12,771 @@
         }
 
         :root {
-            --green: #00FF94;
-            --gold: #FFD700;
-            --red: #FF4500;
-            --dark: #0a0e27;
-            --gray-800: #1a1a2e;
-            --gray-700: #2d3748;
-            --gray-600: #4a5568;
+            --velo-green: #00FF94;
+            --velo-gold: #FFD700;
+            --velo-black: #0a0e27;
+            --velo-dark: #1a1a2e;
+            --gray-light: #f1f5f9;
+            --gray-medium: #64748b;
+            --gray-dark: #334155;
+        }
+
+        html {
+            scroll-behavior: smooth;
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            background: linear-gradient(to bottom, #0a0e27 0%, #1a3a52 50%, #0a0e27 100%);
-            color: #f1f5f9;
-            min-height: 100vh;
-            padding: 1rem;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+            background: white;
+            color: var(--velo-black);
+            line-height: 1.6;
         }
 
-        .container {
-            max-width: 800px;
+        /* NAVIGATION */
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: white;
+            border-bottom: 1px solid #e2e8f0;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .nav-container {
+            max-width: 1200px;
             margin: 0 auto;
             display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-        }
-
-        .title {
-            text-align: center;
-            margin-bottom: 1rem;
-        }
-
-        .title h1 {
-            font-size: 1.8rem;
-            margin-bottom: 0.5rem;
-            color: var(--green);
-            text-shadow: 0 0 20px rgba(0, 255, 148, 0.5);
-        }
-
-        .title p {
-            color: #cbd5e1;
-            font-size: 0.9rem;
-        }
-
-        .ticker {
-            background: var(--gray-800);
-            border: 2px solid var(--green);
-            border-radius: 0.5rem;
-            padding: 0.75rem;
-            overflow: hidden;
-            height: 60px;
-            display: flex;
+            justify-content: space-between;
             align-items: center;
         }
 
-        .ticker-content {
+        .nav-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--velo-black);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-links {
             display: flex;
             gap: 2rem;
-            animation: scroll-ticker 30s linear infinite;
-            white-space: nowrap;
+            list-style: none;
         }
 
-        @keyframes scroll-ticker {
-            0% { transform: translateX(100%); }
-            100% { transform: translateX(-100%); }
+        .nav-links a {
+            text-decoration: none;
+            color: var(--velo-black);
+            font-weight: 500;
+            transition: color 0.3s;
         }
 
-        .ticker-item {
+        .nav-links a:hover {
+            color: var(--velo-green);
+        }
+
+        .cta-button {
+            background: var(--velo-green);
+            color: var(--velo-black);
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+        }
+
+        .cta-button:hover {
+            background: white;
+            color: var(--velo-green);
+            border: 2px solid var(--velo-green);
+            padding: 0.65rem 1.4rem;
+        }
+
+        /* HERO SECTION */
+        .hero {
+            background: linear-gradient(135deg, white 0%, #f8fafc 100%);
+            padding: 6rem 2rem;
+            text-align: center;
+        }
+
+        .hero-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .hero-logo {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 2rem;
+            background: var(--velo-black);
+            border-radius: 0.75rem;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
-            font-size: 0.85rem;
-            font-family: 'Courier New', monospace;
+            justify-content: center;
+            box-shadow: 0 8px 32px rgba(0, 255, 148, 0.15);
         }
 
-        .ticker-dot {
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            animation: pulse 2s infinite;
+        .hero-logo img {
+            width: 80%;
+            height: 80%;
+            object-fit: contain;
         }
 
-        .ticker-dot.bullish { background: var(--green); }
-        .ticker-dot.premium { background: var(--gold); }
-        .ticker-dot.bearish { background: var(--red); }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
-        }
-
-        .map-section {
-            background: var(--gray-800);
-            border: 2px solid #0284c7;
-            border-radius: 0.5rem;
-            padding: 1rem;
-        }
-
-        .map-section h2 {
-            font-size: 1.1rem;
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: var(--velo-black);
             margin-bottom: 1rem;
-            color: #38bdf8;
+            line-height: 1.1;
         }
 
-        .seating-grid {
-            display: grid;
-            gap: 0.25rem;
-            grid-template-columns: repeat(16, 1fr);
-            margin-bottom: 1rem;
+        .hero h1 .highlight {
+            color: var(--velo-green);
         }
 
-        .seat {
-            aspect-ratio: 1;
+        .hero p {
+            font-size: 1.3rem;
+            color: var(--gray-medium);
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .cta-primary {
+            background: var(--velo-green);
+            color: var(--velo-black);
+            padding: 1rem 2rem;
             border: none;
-            border-radius: 0.25rem;
-            cursor: pointer;
-            font-size: 0.65rem;
-            font-weight: bold;
-            transition: all 0.3s;
-            background: var(--gray-700);
-            color: #f1f5f9;
-        }
-
-        .seat:hover {
-            transform: scale(1.1);
-            background: var(--gray-600);
-        }
-
-        .seat.current {
-            background: var(--green);
-            color: #000;
-            transform: scale(1.15);
-            box-shadow: 0 0 15px rgba(0, 255, 148, 0.6);
-        }
-
-        .seat.available {
-            background: var(--gold);
-            color: #000;
-            animation: halo-glow 2s infinite;
-        }
-
-        @keyframes halo-glow {
-            0%, 100% { box-shadow: 0 0 15px rgba(255, 215, 0, 0.5); }
-            50% { box-shadow: 0 0 30px rgba(255, 215, 0, 0.8); }
-        }
-
-        .seat.unavailable {
-            background: var(--gray-700);
-            cursor: not-allowed;
-        }
-
-        .seat-info {
-            font-size: 0.8rem;
-            color: #cbd5e1;
-            margin-top: 0.5rem;
-        }
-
-        .pricing-section {
-            background: var(--gray-800);
-            border: 2px solid var(--red);
             border-radius: 0.5rem;
-            padding: 1rem;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
         }
 
-        .pricing-section h2 {
+        .cta-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0, 255, 148, 0.3);
+        }
+
+        .cta-secondary {
+            background: white;
+            color: var(--velo-black);
+            border: 2px solid var(--velo-black);
+            padding: 0.9rem 1.9rem;
+            border-radius: 0.5rem;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .cta-secondary:hover {
+            background: var(--velo-black);
+            color: white;
+        }
+
+        /* SECTION SPACING */
+        section {
+            padding: 4rem 2rem;
+        }
+
+        .section-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        section h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--velo-black);
+            margin-bottom: 0.5rem;
+        }
+
+        section .subtitle {
             font-size: 1.1rem;
-            margin-bottom: 1rem;
-            color: #ff6b6b;
+            color: var(--gray-medium);
+            margin-bottom: 3rem;
         }
 
-        .pricing-grid {
+        /* REVENUE SECTION */
+        #revenue {
+            background: #f8fafc;
+        }
+
+        .revenue-container {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 1rem;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .revenue-content h2 {
+            margin-bottom: 1.5rem;
+        }
+
+        .revenue-content p {
+            font-size: 1.1rem;
+            color: var(--gray-medium);
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+
+        .revenue-highlight {
+            background: white;
+            border-left: 4px solid var(--velo-green);
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .revenue-highlight .number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--velo-green);
+        }
+
+        .revenue-highlight .label {
+            color: var(--gray-medium);
+            font-size: 0.95rem;
+            margin-top: 0.5rem;
+        }
+
+        .revenue-chart {
+            background: white;
+            padding: 2rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .revenue-chart img {
+            width: 100%;
+            height: auto;
+        }
+
+        /* PROCESS SECTION */
+        #process {
+            background: white;
+        }
+
+        .process-diagram {
+            background: white;
+            padding: 2rem;
+            border-radius: 0.75rem;
+            margin: 3rem 0;
+            text-align: center;
+        }
+
+        .process-diagram img {
+            width: 100%;
+            max-width: 900px;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .process-description {
+            background: #f8fafc;
+            border-left: 4px solid var(--velo-gold);
+            padding: 2rem;
+            margin-top: 2rem;
+            border-radius: 0.5rem;
+        }
+
+        /* VALUE PROPS SECTION */
+        #value-props {
+            background: white;
+        }
+
+        .value-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .value-card {
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 0.75rem;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .value-card:hover {
+            border-color: var(--velo-green);
+            box-shadow: 0 8px 24px rgba(0, 255, 148, 0.1);
+            transform: translateY(-4px);
+        }
+
+        .value-card.venue {
+            border-top: 4px solid var(--velo-green);
+        }
+
+        .value-card.home {
+            border-top: 4px solid var(--velo-gold);
+        }
+
+        .value-card.venue-attend {
+            border-top: 4px solid #0284c7;
+        }
+
+        .value-icon {
+            font-size: 2.5rem;
             margin-bottom: 1rem;
         }
 
-        .price-card {
-            background: var(--gray-700);
-            padding: 1rem;
-            border-radius: 0.5rem;
-        }
-
-        .price-card label {
-            display: block;
-            font-size: 0.75rem;
-            color: #94a3b8;
-            margin-bottom: 0.5rem;
-        }
-
-        .price-value {
-            font-size: 2rem;
-            font-weight: bold;
-            color: #fff;
-            font-family: 'Courier New', monospace;
-            margin: 0.5rem 0;
-        }
-
-        .price-value.flipping {
-            animation: flip-card 0.6s ease-in-out;
-        }
-
-        @keyframes flip-card {
-            0% { transform: rotateX(0deg); }
-            50% { transform: rotateX(90deg); }
-            100% { transform: rotateX(0deg); }
-        }
-
-        .trend-indicator {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            margin-top: 0.5rem;
-            font-size: 0.85rem;
-        }
-
-        .trend-arrow {
-            font-size: 1.2rem;
-            animation: bounce 1.5s infinite;
-        }
-
-        .trend-arrow.up { color: var(--green); }
-        .trend-arrow.down { color: var(--red); }
-
-        @keyframes bounce {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.3; }
-        }
-
-        .volatility-bar {
-            background: var(--gray-600);
-            height: 8px;
-            border-radius: 4px;
-            overflow: hidden;
-            margin-top: 0.5rem;
-        }
-
-        .volatility-fill {
-            height: 100%;
-            background: var(--gold);
-            width: 0%;
-            transition: width 0.3s;
-        }
-
-        .countdown {
-            text-align: center;
-            font-size: 0.8rem;
-            color: #94a3b8;
-            margin-top: 0.5rem;
-        }
-
-        .ticket-section {
-            background: var(--gray-800);
-            border: 2px solid #64748b;
-            border-radius: 0.5rem;
-            padding: 1.5rem;
-            text-align: center;
-        }
-
-        .ticket-label {
-            font-size: 0.75rem;
-            color: #94a3b8;
-            margin-bottom: 0.5rem;
-        }
-
-        .ticket-seat {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: #fff;
-            margin: 0.5rem 0;
-        }
-
-        .ticket-type {
-            font-size: 0.7rem;
-            color: #64748b;
-            font-family: 'Courier New', monospace;
-            margin-top: 0.5rem;
-        }
-
-        .slider-section {
-            background: var(--gray-800);
-            border: 2px solid #0284c7;
-            border-radius: 0.5rem;
-            padding: 1rem;
-        }
-
-        .slider-label {
-            font-size: 0.8rem;
-            color: #94a3b8;
+        .value-card h3 {
+            font-size: 1.3rem;
             margin-bottom: 0.75rem;
+            color: var(--velo-black);
         }
 
-        .slider-container {
-            position: relative;
-            width: 100%;
-            height: 50px;
-            background: var(--gray-700);
-            border-radius: 0.5rem;
-            overflow: hidden;
-            cursor: grab;
-            user-select: none;
+        .value-card p {
+            color: var(--gray-medium);
+            font-size: 0.95rem;
+            line-height: 1.6;
         }
 
-        .slider-fill {
-            position: absolute;
-            top: 0;
-            left: 0;
-            height: 100%;
-            background: linear-gradient(90deg, #0284c7, #7c3aed);
-            transition: width 0.1s;
-            width: 0%;
+        .value-card .subtext {
+            margin-top: 1rem;
+            font-size: 0.85rem;
+            color: #94a3b8;
+            font-style: italic;
         }
 
-        .slider-content {
-            position: relative;
-            width: 100%;
-            height: 100%;
+        /* FEATURES SECTION */
+        #features {
+            background: #f8fafc;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .feature-item {
+            background: white;
+            padding: 2rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .feature-item h3 {
+            color: var(--velo-black);
+            margin-bottom: 1rem;
             display: flex;
             align-items: center;
-            padding: 0 1rem;
-            font-size: 0.9rem;
-            color: #fff;
-            font-family: 'Courier New', monospace;
-            z-index: 2;
+            gap: 0.75rem;
         }
 
-        @media (max-width: 600px) {
-            body { padding: 0.5rem; }
-            .container { gap: 1rem; }
-            .title h1 { font-size: 1.4rem; }
-            .pricing-grid { grid-template-columns: 1fr; }
-            .seating-grid { gap: 0.15rem; }
+        .feature-item h3::before {
+            content: "✓";
+            color: var(--velo-green);
+            font-weight: 800;
+            font-size: 1.3rem;
+        }
+
+        .feature-item p {
+            color: var(--gray-medium);
+            font-size: 0.95rem;
+        }
+
+        /* STATS SECTION */
+        #stats {
+            background: var(--velo-black);
+            color: white;
+        }
+
+        #stats h2,
+        #stats .subtitle {
+            color: white;
+        }
+
+        #stats .subtitle {
+            color: #cbd5e1;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .stat-box {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(0, 255, 148, 0.05);
+            border: 1px solid rgba(0, 255, 148, 0.2);
+            border-radius: 0.75rem;
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--velo-green);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 1rem;
+            color: #cbd5e1;
+        }
+
+        /* CTA SECTION */
+        #cta {
+            background: linear-gradient(135deg, var(--velo-black) 0%, #1a2a3a 100%);
+            color: white;
+            text-align: center;
+            padding: 5rem 2rem;
+        }
+
+        #cta h2 {
+            color: white;
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        #cta p {
+            font-size: 1.2rem;
+            color: #cbd5e1;
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* FOOTER */
+        footer {
+            background: var(--velo-black);
+            color: #94a3b8;
+            padding: 3rem 2rem 2rem;
+            border-top: 1px solid rgba(0, 255, 148, 0.1);
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h4 {
+            color: white;
+            margin-bottom: 1rem;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section a {
+            color: #94a3b8;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-section a:hover {
+            color: var(--velo-green);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(0, 255, 148, 0.1);
+            padding-top: 2rem;
+            text-align: center;
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .revenue-container {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            section h2 {
+                font-size: 1.8rem;
+            }
+
+            .stats-grid,
+            .value-grid,
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="title">
-            <h1>🎉 VELO™</h1>
-            <p>Live Event Inventory Liquidity Engine</p>
+    <!-- NAVIGATION -->
+    <nav>
+        <div class="nav-container">
+            <div class="nav-logo">🚀 VELO</div>
+            <ul class="nav-links">
+                <li><a href="#revenue">Revenue Model</a></li>
+                <li><a href="#process">How It Works</a></li>
+                <li><a href="#value-props">Value Props</a></li>
+                <li><a href="#features">Features</a></li>
+            </ul>
+            <button class="cta-button">Get Demo</button>
         </div>
+    </nav>
 
-        <div class="ticker">
-            <div class="ticker-content" id="tickerContent">
-                <div class="ticker-item">
-                    <span class="ticker-dot bullish"></span>
-                    <span>EVENT_LIVE_001 +5.2%</span>
-                </div>
-                <div class="ticker-item">
-                    <span class="ticker-dot premium"></span>
-                    <span>PREMIUM_UPGRADE_42</span>
-                </div>
-                <div class="ticker-item">
-                    <span class="ticker-dot bearish"></span>
-                    <span>VOLATILITY_DOWN -2.1%</span>
-                </div>
+    <!-- HERO SECTION -->
+    <section class="hero">
+        <div class="hero-container">
+            <div class="hero-logo">
+                <img src="https://user-gen-media-assets.s3.amazonaws.com/gemini_images/0d9160be-7422-4e71-b883-fdaa9efe747c.png" alt="VELO Logo">
+            </div>
+            <h1>Turn <span class="highlight">Dead Inventory</span> into <span class="highlight">Live Revenue</span></h1>
+            <p>The first liquidity engine that allows venues to sell the same seat twice.</p>
+            <div class="hero-buttons">
+                <button class="cta-primary">Start Free Trial</button>
+                <button class="cta-secondary">Schedule Demo</button>
             </div>
         </div>
+    </section>
 
-        <div class="map-section">
-            <h2>Volatility Map</h2>
-            <div class="seating-grid" id="seatingGrid"></div>
-            <div class="seat-info" id="seatInfo">Current Seat: Row 6 • Col 9</div>
-        </div>
+    <!-- REVENUE MODEL SECTION -->
+    <section id="revenue">
+        <div class="section-container">
+            <h2>The Double-Dip Revenue Model</h2>
+            <p class="subtitle">See how VELO creates multiple revenue streams from a single seat</p>
+            
+            <div class="revenue-container">
+                <div class="revenue-content">
+                    <h3>Unlock Hidden Revenue</h3>
+                    <p>
+                        Traditional ticketing leaves money on the table. No-shows, empty seats, and lost F&B opportunities mean venues lose thousands per event.
+                    </p>
+                    <p>
+                        <strong>VELO changes the game:</strong> When a seat would otherwise go empty, we unlock it for dynamic upgrade sales and concession recovery.
+                    </p>
+                    
+                    <div class="revenue-highlight">
+                        <div class="number">+30%</div>
+                        <div class="label">Average Yield Increase</div>
+                    </div>
 
-        <div class="pricing-section">
-            <h2>Volatility Engine</h2>
-            <div class="pricing-grid">
-                <div class="price-card">
-                    <label>Current Price</label>
-                    <div class="price-value" id="priceDisplay">$125.50</div>
-                    <div class="trend-indicator">
-                        <span class="trend-arrow up" id="trendArrow">↑</span>
-                        <span id="trendText">Bullish</span>
+                    <div class="revenue-highlight">
+                        <div class="number">$847K</div>
+                        <div class="label">Annual Revenue Recovery (100-seat venue)</div>
                     </div>
                 </div>
-                <div class="price-card">
-                    <label>Volatility</label>
-                    <div class="price-value" style="color: var(--gold);" id="volatilityValue">45%</div>
-                    <div class="volatility-bar">
-                        <div class="volatility-fill" id="volatilityBar" style="width: 45%;"></div>
-                    </div>
+
+                <div class="revenue-chart">
+                    <img src="https://ppl-ai-code-interpreter-files.s3.amazonaws.com/web/direct-files/23e57f6b1e6135bfe224ba8a7343201f/a2f38014-711e-44fa-a18f-bc5ea8a5316c/2c5673b4.png" alt="Revenue Comparison Chart">
                 </div>
             </div>
-            <div class="countdown" id="countdown">Next update in 8.0s</div>
         </div>
+    </section>
 
-        <div class="ticket-section">
-            <div class="ticket-label">YOUR SEAT</div>
-            <div class="ticket-seat" id="ticketSeat">Row 6 • Col 9</div>
-            <div class="ticket-type">STANDARD</div>
-        </div>
+    <!-- PROCESS SECTION -->
+    <section id="process">
+        <div class="section-container">
+            <h2>How VELO Liquid-Lock Works</h2>
+            <p class="subtitle">Three simple steps to turn no-shows into revenue</p>
+            
+            <div class="process-diagram">
+                <img src="https://user-gen-media-assets.s3.amazonaws.com/gemini_images/01e5c1c7-7b20-4e77-b469-d3b000c3f33d.png" alt="VELO Process Flow">
+            </div>
 
-        <div class="slider-section" id="sliderSection" style="display: none;">
-            <div class="slider-label">Slide to upgrade</div>
-            <div class="slider-container" id="sliderContainer">
-                <div class="slider-fill" id="sliderFill"></div>
-                <div class="slider-content" id="sliderContent">Row 4 • Col 7</div>
+            <div class="process-description">
+                <h3>The Liquid-Lock Advantage</h3>
+                <p style="margin: 0; color: #64748b;">
+                    When Fan 1 (the original ticket holder) doesn't show up or explicitly releases their seat, VELO's proprietary Liquid-Lock system instantly secures that inventory. Within milliseconds, Fan 2 (at the venue) sees an upgrade offer at a dynamic price. If they accept, the venue captures upgrade revenue AND drives incremental F&B spending. It's the same seat, sold twice—legally, transparently, and profitably.
+                </p>
             </div>
         </div>
-    </div>
+    </section>
 
-    <script>
-        let state = {
-            currentSeat: { row: 5, col: 8 },
-            selectedUpgrade: null,
-            price: 125.50,
-            trend: 'up',
-            lastUpdate: Date.now(),
-            sliderDragProgress: 0
-        };
-
-        const ROWS = 12, COLS = 16;
-        const AVAILABLE_SEATS = [
-            { row: 3, col: 6 },
-            { row: 3, col: 10 },
-            { row: 7, col: 12 }
-        ];
-
-        function initSeatingGrid() {
-            const grid = document.getElementById('seatingGrid');
-            grid.innerHTML = '';
+    <!-- VALUE PROPOSITIONS SECTION -->
+    <section id="value-props">
+        <div class="section-container">
+            <h2>Three Win-Win Value Propositions</h2>
+            <p class="subtitle">VELO creates value for every stakeholder in the ecosystem</p>
             
-            for (let row = 0; row < ROWS; row++) {
-                for (let col = 0; col < COLS; col++) {
-                    const seat = document.createElement('button');
-                    seat.className = 'seat';
-                    
-                    const isCurrent = state.currentSeat.row === row && state.currentSeat.col === col;
-                    const isAvailable = AVAILABLE_SEATS.some(s => s.row === row && s.col === col);
-                    
-                    if (isCurrent) {
-                        seat.classList.add('current');
-                        seat.textContent = '✓';
-                    } else if (isAvailable) {
-                        seat.classList.add('available');
-                        seat.textContent = '↑';
-                        seat.onclick = () => selectUpgrade(row, col);
-                    } else {
-                        seat.classList.add('unavailable');
-                    }
-                    
-                    grid.appendChild(seat);
-                }
-            }
+            <div class="value-grid">
+                <div class="value-card venue">
+                    <div class="value-icon">🏟️</div>
+                    <h3>Venues</h3>
+                    <p><strong>Recover Lost Concession Revenue</strong></p>
+                    <p>Monetize no-shows with upgrade fees and drive incremental F&B spending. No complex integrations—VELO works with your existing ticketing system.</p>
+                    <div class="subtext">Average: +$8,470 per event</div>
+                </div>
+
+                <div class="value-card home">
+                    <div class="value-icon">🏠</div>
+                    <h3>Home Fans</h3>
+                    <p><strong>Earn Rewards for Staying Home</strong></p>
+                    <p>Release your ticket before game time and earn VELO credits. Zero commitment, full flexibility. Perfect for last-minute schedule changes.</p>
+                    <div class="subtext">Average: $42–$128 per release</div>
+                </div>
+
+                <div class="value-card venue-attend">
+                    <div class="value-icon">⭐</div>
+                    <h3>Venue Fans</h3>
+                    <p><strong>VIP Access at Dynamic Prices</strong></p>
+                    <p>Upgrade to premium seats in real-time. AI-powered pricing means you always get the best deal when seats become available.</p>
+                    <div class="subtext">Save up to 40% on premium upgrades</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FEATURES SECTION -->
+    <section id="features">
+        <div class="section-container">
+            <h2>Platform Capabilities</h2>
+            <p class="subtitle">Enterprise-grade features built for modern venues</p>
             
-            document.getElementById('seatInfo').textContent = 
-                `Current Seat: Row ${state.currentSeat.row + 1} • Col ${state.currentSeat.col + 1}`;
-        }
+            <div class="features-grid">
+                <div class="feature-item">
+                    <h3>Real-Time Inventory Management</h3>
+                    <p>Instant detection and activation of no-show seats with millisecond response times. Always know exactly which seats are available.</p>
+                </div>
 
-        function selectUpgrade(row, col) {
-            state.selectedUpgrade = { row, col };
-            document.getElementById('sliderSection').style.display = 'block';
-            document.getElementById('sliderContent').textContent = 
-                `Row ${row + 1} • Col ${col + 1}`;
-            document.getElementById('sliderFill').style.width = '0%';
-            state.sliderDragProgress = 0;
-        }
+                <div class="feature-item">
+                    <h3>Dynamic Pricing Engine</h3>
+                    <p>AI-powered pricing algorithm adjusts upgrade offers based on demand, time to event, and historical data. Maximize yield per event.</p>
+                </div>
 
-        function updatePricing() {
-            const change = (Math.random() - 0.5) * 10;
-            state.price = Math.max(100, Math.min(200, state.price + change));
-            state.trend = Math.random() > 0.5 ? 'up' : 'down';
-            state.lastUpdate = Date.now();
+                <div class="feature-item">
+                    <h3>Seamless Fan Experience</h3>
+                    <p>Mobile-first interface. Fans get upgrade notifications in real-time. One-tap acceptance. Frictionless from offer to confirmation.</p>
+                </div>
+
+                <div class="feature-item">
+                    <h3>Revenue Reporting & Analytics</h3>
+                    <p>Comprehensive dashboard tracking upgrade volume, pricing performance, F&B uplift, and detailed ROI metrics. Know exactly what VELO is worth.</p>
+                </div>
+
+                <div class="feature-item">
+                    <h3>Ticketing System Integration</h3>
+                    <p>Works with Ticketmaster, AXS, StubHub, and all major platforms. No rip-and-replace. Plug into your existing stack in days.</p>
+                </div>
+
+                <div class="feature-item">
+                    <h3>Compliance & Security</h3>
+                    <p>SOC 2 Type II certified. PCI-DSS compliance. All transactions transparent and legally sound. Built for enterprise risk standards.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- STATS SECTION -->
+    <section id="stats">
+        <div class="section-container">
+            <h2>Trusted by Leading Venues</h2>
+            <p class="subtitle">Proven results across sports, concerts, and entertainment venues</p>
             
-            const priceDisplay = document.getElementById('priceDisplay');
-            priceDisplay.classList.add('flipping');
-            priceDisplay.textContent = '$' + state.price.toFixed(2);
-            setTimeout(() => priceDisplay.classList.remove('flipping'), 600);
-            
-            document.getElementById('trendArrow').textContent = state.trend === 'up' ? '↑' : '↓';
-            document.getElementById('trendArrow').className = `trend-arrow ${state.trend}`;
-            document.getElementById('trendText').textContent = state.trend === 'up' ? 'Bullish' : 'Bearish';
-        }
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <div class="stat-number">847K</div>
+                    <div class="stat-label">Annual Revenue per 100-Seat Venue</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">30%</div>
+                    <div class="stat-label">Average Yield Increase</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">8.2%</div>
+                    <div class="stat-label">Upgrade Conversion Rate</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">28hrs</div>
+                    <div class="stat-label">Deployment Time</div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-        function updateVolatility() {
-            const volatility = Math.floor(Math.random() * 100);
-            document.getElementById('volatilityValue').textContent = volatility + '%';
-            document.getElementById('volatilityBar').style.width = volatility + '%';
-        }
+    <!-- CTA SECTION -->
+    <section id="cta">
+        <div class="section-container">
+            <h2>Ready to Unlock Your Venue's Hidden Revenue?</h2>
+            <p>Join the future of live event monetization. VELO is built for venues that want to maximize every seat, every fan, every dollar.</p>
+            <button class="cta-primary" style="padding: 1.25rem 2.5rem; font-size: 1.1rem;">Schedule Your Demo Today</button>
+        </div>
+    </section>
 
-        function updateCountdown() {
-            const elapsed = (Date.now() - state.lastUpdate) / 1000;
-            const remaining = Math.max(0, 8 - elapsed);
-            document.getElementById('countdown').textContent = `Next update in ${remaining.toFixed(1)}s`;
-        }
-
-        const sliderEl = document.getElementById('sliderContainer');
-        if (sliderEl) {
-            sliderEl.addEventListener('mousemove', (e) => {
-                const rect = sliderEl.getBoundingClientRect();
-                const progress = Math.max(0, Math.min(100, ((e.clientX - rect.left) / rect.width) * 100));
-                state.sliderDragProgress = progress;
-                document.getElementById('sliderFill').style.width = progress + '%';
-                
-                if (progress > 90) {
-                    document.getElementById('sliderContent').textContent = '✓ Upgraded!';
-                    confirmUpgrade();
-                } else if (state.selectedUpgrade) {
-                    document.getElementById('sliderContent').textContent = 
-                        `Row ${state.selectedUpgrade.row + 1} • Col ${state.selectedUpgrade.col + 1}`;
-                }
-            });
-
-            sliderEl.addEventListener('mouseup', () => {
-                if (state.sliderDragProgress < 90) {
-                    state.sliderDragProgress = 0;
-                    document.getElementById('sliderFill').style.width = '0%';
-                    if (state.selectedUpgrade) {
-                        document.getElementById('sliderContent').textContent = 
-                            `Row ${state.selectedUpgrade.row + 1} • Col ${state.selectedUpgrade.col + 1}`;
-                    }
-                }
-            });
-        }
-
-        function confirmUpgrade() {
-            setTimeout(() => {
-                state.currentSeat = state.selectedUpgrade;
-                state.selectedUpgrade = null;
-                document.getElementById('sliderSection').style.display = 'none';
-                document.getElementById('ticketSeat').textContent = 
-                    `Row ${state.currentSeat.row + 1} • Col ${state.currentSeat.col + 1}`;
-                initSeatingGrid();
-            }, 600);
-        }
-
-        initSeatingGrid();
-        updateVolatility();
-
-        setInterval(() => {
-            updatePricing();
-            updateVolatility();
-        }, 8000);
-
-        setInterval(updateCountdown, 100);
-
-        setInterval(() => {
-            const types = ['bullish', 'premium', 'bearish'];
-            const type = types[Math.floor(Math.random() * types.length)];
-            const newItem = document.createElement('div');
-            newItem.className = 'ticker-item';
-            newItem.innerHTML = `
-                <span class="ticker-dot ${type}"></span>
-                <span>EVENT_${Math.floor(Math.random() * 1000)} ${(Math.random() * 10 - 5).toFixed(1)}%</span>
-            `;
-            document.getElementById('tickerContent').appendChild(newItem);
-            
-            const items = document.getElementById('tickerContent').querySelectorAll('.ticker-item');
-            if (items.length > 5) items[0].remove();
-        }, 5000);
-    </script>
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>VELO™</h4>
+                    <p style="font-size: 0.85rem; margin: 0;">The Live Event Inventory Liquidity Engine</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Product</h4>
+                    <ul>
+                        <li><a href="#">Features</a></li>
+                        <li><a href="#">Pricing</a></li>
+                        <li><a href="#">Security</a></li>
+                        <li><a href="#">API Docs</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="#">About</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Press</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="#">Privacy</a></li>
+                        <li><a href="#">Terms</a></li>
+                        <li><a href="#">Compliance</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 VELO™. All rights reserved. Turn Dead Inventory into Live Revenue.</p>
+            </div>
+        </div>
+    </footer>
 </body>
 </html>
