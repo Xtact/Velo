@@ -54,7 +54,6 @@
             font-size: 0.9rem;
         }
 
-        /* Stock Ticker */
         .ticker {
             background: var(--gray-800);
             border: 2px solid var(--green);
@@ -102,7 +101,6 @@
             50% { opacity: 0.5; }
         }
 
-        /* Volatility Map */
         .map-section {
             background: var(--gray-800);
             border: 2px solid #0284c7;
@@ -135,7 +133,7 @@
             color: #f1f5f9;
         }
 
-        .seat:hover:not(.occupied):not(.unavailable) {
+        .seat:hover {
             transform: scale(1.1);
             background: var(--gray-600);
         }
@@ -169,7 +167,6 @@
             margin-top: 0.5rem;
         }
 
-        /* Pricing Engine */
         .pricing-section {
             background: var(--gray-800);
             border: 2px solid var(--red);
@@ -264,7 +261,6 @@
             margin-top: 0.5rem;
         }
 
-        /* Ticket */
         .ticket-section {
             background: var(--gray-800);
             border: 2px solid #64748b;
@@ -293,7 +289,6 @@
             margin-top: 0.5rem;
         }
 
-        /* Slider */
         .slider-section {
             background: var(--gray-800);
             border: 2px solid #0284c7;
@@ -341,27 +336,12 @@
             z-index: 2;
         }
 
-        /* Responsive */
         @media (max-width: 600px) {
-            body {
-                padding: 0.5rem;
-            }
-
-            .container {
-                gap: 1rem;
-            }
-
-            .title h1 {
-                font-size: 1.4rem;
-            }
-
-            .pricing-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .seating-grid {
-                gap: 0.15rem;
-            }
+            body { padding: 0.5rem; }
+            .container { gap: 1rem; }
+            .title h1 { font-size: 1.4rem; }
+            .pricing-grid { grid-template-columns: 1fr; }
+            .seating-grid { gap: 0.15rem; }
         }
     </style>
 </head>
@@ -372,7 +352,6 @@
             <p>Live Event Inventory Liquidity Engine</p>
         </div>
 
-        <!-- Stock Ticker -->
         <div class="ticker">
             <div class="ticker-content" id="tickerContent">
                 <div class="ticker-item">
@@ -390,14 +369,12 @@
             </div>
         </div>
 
-        <!-- Volatility Map -->
         <div class="map-section">
             <h2>Volatility Map</h2>
             <div class="seating-grid" id="seatingGrid"></div>
             <div class="seat-info" id="seatInfo">Current Seat: Row 6 • Col 9</div>
         </div>
 
-        <!-- Pricing Engine -->
         <div class="pricing-section">
             <h2>Volatility Engine</h2>
             <div class="pricing-grid">
@@ -420,14 +397,12 @@
             <div class="countdown" id="countdown">Next update in 8.0s</div>
         </div>
 
-        <!-- Ticket Display -->
         <div class="ticket-section">
             <div class="ticket-label">YOUR SEAT</div>
             <div class="ticket-seat" id="ticketSeat">Row 6 • Col 9</div>
             <div class="ticket-type">STANDARD</div>
         </div>
 
-        <!-- Upgrade Slider -->
         <div class="slider-section" id="sliderSection" style="display: none;">
             <div class="slider-label">Slide to upgrade</div>
             <div class="slider-container" id="sliderContainer">
@@ -438,7 +413,6 @@
     </div>
 
     <script>
-        // State
         let state = {
             currentSeat: { row: 5, col: 8 },
             selectedUpgrade: null,
@@ -448,15 +422,13 @@
             sliderDragProgress: 0
         };
 
-        const ROWS = 12;
-        const COLS = 16;
+        const ROWS = 12, COLS = 16;
         const AVAILABLE_SEATS = [
             { row: 3, col: 6 },
             { row: 3, col: 10 },
             { row: 7, col: 12 }
         ];
 
-        // Initialize seating grid
         function initSeatingGrid() {
             const grid = document.getElementById('seatingGrid');
             grid.innerHTML = '';
@@ -475,12 +447,9 @@
                     } else if (isAvailable) {
                         seat.classList.add('available');
                         seat.textContent = '↑';
+                        seat.onclick = () => selectUpgrade(row, col);
                     } else {
                         seat.classList.add('unavailable');
-                    }
-                    
-                    if (isAvailable) {
-                        seat.onclick = () => selectUpgrade(row, col);
                     }
                     
                     grid.appendChild(seat);
@@ -500,7 +469,6 @@
             state.sliderDragProgress = 0;
         }
 
-        // Real-time pricing
         function updatePricing() {
             const change = (Math.random() - 0.5) * 10;
             state.price = Math.max(100, Math.min(200, state.price + change));
@@ -510,54 +478,53 @@
             const priceDisplay = document.getElementById('priceDisplay');
             priceDisplay.classList.add('flipping');
             priceDisplay.textContent = '$' + state.price.toFixed(2);
-            
             setTimeout(() => priceDisplay.classList.remove('flipping'), 600);
             
-            const trendArrow = document.getElementById('trendArrow');
-            const trendText = document.getElementById('trendText');
-            trendArrow.textContent = state.trend === 'up' ? '↑' : '↓';
-            trendArrow.className = `trend-arrow ${state.trend}`;
-            trendText.textContent = state.trend === 'up' ? 'Bullish' : 'Bearish';
+            document.getElementById('trendArrow').textContent = state.trend === 'up' ? '↑' : '↓';
+            document.getElementById('trendArrow').className = `trend-arrow ${state.trend}`;
+            document.getElementById('trendText').textContent = state.trend === 'up' ? 'Bullish' : 'Bearish';
         }
 
-        // Volatility updates
         function updateVolatility() {
             const volatility = Math.floor(Math.random() * 100);
             document.getElementById('volatilityValue').textContent = volatility + '%';
             document.getElementById('volatilityBar').style.width = volatility + '%';
         }
 
-        // Countdown timer
         function updateCountdown() {
             const elapsed = (Date.now() - state.lastUpdate) / 1000;
             const remaining = Math.max(0, 8 - elapsed);
             document.getElementById('countdown').textContent = `Next update in ${remaining.toFixed(1)}s`;
         }
 
-        // Slider interaction
-        document.getElementById('sliderContainer')?.addEventListener('touchmove', (e) => {
-            const rect = document.getElementById('sliderContainer').getBoundingClientRect();
-            const progress = Math.max(0, Math.min(100, ((e.touches[0].clientX - rect.left) / rect.width) * 100));
-            state.sliderDragProgress = progress;
-            document.getElementById('sliderFill').style.width = progress + '%';
-            
-            const content = document.getElementById('sliderContent');
-            if (progress > 90) {
-                content.textContent = '✓ Upgraded!';
-                confirmUpgrade();
-            } else {
-                content.textContent = `Row ${state.selectedUpgrade.row + 1} • Col ${state.selectedUpgrade.col + 1}`;
-            }
-        });
+        const sliderEl = document.getElementById('sliderContainer');
+        if (sliderEl) {
+            sliderEl.addEventListener('mousemove', (e) => {
+                const rect = sliderEl.getBoundingClientRect();
+                const progress = Math.max(0, Math.min(100, ((e.clientX - rect.left) / rect.width) * 100));
+                state.sliderDragProgress = progress;
+                document.getElementById('sliderFill').style.width = progress + '%';
+                
+                if (progress > 90) {
+                    document.getElementById('sliderContent').textContent = '✓ Upgraded!';
+                    confirmUpgrade();
+                } else if (state.selectedUpgrade) {
+                    document.getElementById('sliderContent').textContent = 
+                        `Row ${state.selectedUpgrade.row + 1} • Col ${state.selectedUpgrade.col + 1}`;
+                }
+            });
 
-        document.getElementById('sliderContainer')?.addEventListener('touchend', () => {
-            if (state.sliderDragProgress < 90) {
-                state.sliderDragProgress = 0;
-                document.getElementById('sliderFill').style.width = '0%';
-                document.getElementById('sliderContent').textContent = 
-                    `Row ${state.selectedUpgrade.row + 1} • Col ${state.selectedUpgrade.col + 1}`;
-            }
-        });
+            sliderEl.addEventListener('mouseup', () => {
+                if (state.sliderDragProgress < 90) {
+                    state.sliderDragProgress = 0;
+                    document.getElementById('sliderFill').style.width = '0%';
+                    if (state.selectedUpgrade) {
+                        document.getElementById('sliderContent').textContent = 
+                            `Row ${state.selectedUpgrade.row + 1} • Col ${state.selectedUpgrade.col + 1}`;
+                    }
+                }
+            });
+        }
 
         function confirmUpgrade() {
             setTimeout(() => {
@@ -570,20 +537,16 @@
             }, 600);
         }
 
-        // Initialize
         initSeatingGrid();
         updateVolatility();
 
-        // Update pricing every 8 seconds
         setInterval(() => {
             updatePricing();
             updateVolatility();
         }, 8000);
 
-        // Update countdown every 100ms
         setInterval(updateCountdown, 100);
 
-        // Ticker animation
         setInterval(() => {
             const types = ['bullish', 'premium', 'bearish'];
             const type = types[Math.floor(Math.random() * types.length)];
